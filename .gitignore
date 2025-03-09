@@ -1,0 +1,6 @@
+ASL1/
+8.0.196
+dataset/
+segment/
+train_data/
+*.pt
