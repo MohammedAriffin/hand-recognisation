@@ -6,14 +6,14 @@ import os
 
 # Initialize the model using the YOLOv10s weights
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model = YOLO("yolov10s.pt")
+model = YOLO("yolov11_finetuned.pt")#YOLOv10n_hands.pt or yolov10s.pt or yolov10_finetuned.pt
 model.to(device)
 
 # Folder to save cropped hand images
 save_folder = "segment"
 os.makedirs(save_folder, exist_ok=True)
 
-def model_run(runtime=10, skip=6):
+def model_run(runtime=20, skip=6):
     """Open the webcam, process every 'skip'th frame, and if a hand is detected,
     crop & save it. The loop runs for 'runtime' seconds or until 'q' is pressed."""
 

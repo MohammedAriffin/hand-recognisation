@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['hand']
+
+roboflow:
+  workspace: hand-detection-nzzde
+  project: hand-recognition-for-yolov10
+  version: 1
+  license: MIT
+  url: https://universe.roboflow.com/hand-detection-nzzde/hand-recognition-for-yolov10/dataset/1

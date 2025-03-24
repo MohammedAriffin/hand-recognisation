@@ -4,3 +4,8 @@ dataset/
 segment/
 train_data/
 *.pt
+valid/
+train/
+test/
+yolov10_custom/
+yolov11_custom/
