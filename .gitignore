@@ -9,3 +9,6 @@ train/
 test/
 yolov10_custom/
 yolov11_custom/
+Transformer_dataset/
+best_vit_model/
+*.png
