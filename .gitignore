@@ -11,6 +11,8 @@ yolov10_custom/
 yolov11_custom/
 Transformer_dataset/
 best_vit_model/
+final_vit_model/
 *.png
 paligemma_test_dataset/
+asl_alphabet_train/
 *.pyc

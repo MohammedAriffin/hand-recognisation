@@ -51,7 +51,7 @@ if __name__ == '__main__':
     print(f"Using device: {device}")
 
     # Load the model
-    model = ViTForImageClassification.from_pretrained('best_vit_model').to(device)
+    model = ViTForImageClassification.from_pretrained('final_vit_model').to(device)
     print("Model loaded successfully")
 
     # You DO need a test dataset - create a DataLoader for your test data

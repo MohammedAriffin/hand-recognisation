@@ -6,7 +6,7 @@ import cv2
 import torchvision.transforms as transforms
 
 class ClassifierService:
-    def __init__(self, model_path="best_vit_model"):
+    def __init__(self, model_path="final_vit_model"):
         """Service for hand gesture classification using ViT"""
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
@@ -35,17 +35,17 @@ class ClassifierService:
             print(f"Error loading classification model: {e}")
             raise
     
-    def classify_image(self, image):
+    def classify_image(self, image, confidence_threshold):
         """Classify a hand image and return the predicted class"""
         if image is None or image.size == 0:
             return "Invalid image"
             
         try:
             # Convert BGR to RGB
-            rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            #rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             
             # Convert to PIL Image
-            pil_image = Image.fromarray(rgb_image)
+            pil_image = Image.fromarray(image)
             
             # Apply transforms to preprocess the image
             input_tensor = self.transform(pil_image).unsqueeze(0).to(self.device)  # Add batch dimension
@@ -54,12 +54,20 @@ class ClassifierService:
             with torch.no_grad():
                 outputs = self.model(pixel_values=input_tensor)
             
-            # Get the predicted class
-            predicted_class_idx = outputs.logits.argmax(-1).item()
-            predicted_class = self.class_names[predicted_class_idx]
+            # Apply softmax to get probabilities
+            probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
             
-            return predicted_class
+            # Get the maximum probability and corresponding index
+            max_prob, predicted_idx = torch.max(probabilities, dim=-1)
+            confidence = max_prob.item()
             
+            # Only return prediction if confidence exceeds threshold
+            if confidence >= confidence_threshold:
+                predicted_class = self.class_names[predicted_idx.item()]
+                return predicted_class
+            else:
+                return "Low confidence"
+                
         except Exception as e:
             print(f"Error in classification: {e}")
             return "Classification error"

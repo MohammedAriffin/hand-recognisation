@@ -34,7 +34,10 @@ class CameraService:
                 print("Error capturing frame")
                 time.sleep(0.1)
                 continue
-                
+            
+            # Convert BGR to RGB immediately after capture
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            
             # Remove oldest frame if buffer is full
             if self.frame_buffer.full():
                 try:
